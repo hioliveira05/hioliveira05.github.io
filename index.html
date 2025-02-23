@@ -60,7 +60,7 @@
             background-color: #1e1e2f;
             color: white;
         }
-        /* Area de conteúdo */
+        /* Área de conteúdo */
         .content {
             flex: 1;
             padding: 20px;
@@ -176,11 +176,16 @@
         // Mostrar a categoria selecionada
         const commands = document.querySelectorAll('.command-list');
         commands.forEach(commandList => commandList.style.display = 'none');
-        document.getElementById(category + '-commands').style.display = 'block';
+        const selectedCategory = document.getElementById(category + '-commands');
+        if (selectedCategory) {
+            selectedCategory.style.display = 'block';
+        }
 
         // Marcar a categoria como ativa
-        const selectedCategory = document.querySelector('.category[data-category="'+category+'"]');
-        selectedCategory.classList.add('active');
+        const selectedCategoryElement = document.querySelector('.category[data-category="'+category+'"]');
+        if (selectedCategoryElement) {
+            selectedCategoryElement.classList.add('active');
+        }
     }
 
     // Função para pesquisar os comandos
@@ -199,6 +204,11 @@
             }
         });
     }
+
+    // Exibir a primeira categoria por padrão
+    window.onload = function() {
+        toggleCommands('utility');
+    };
 </script>
 
 </body>
