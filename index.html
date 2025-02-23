@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos do Bot Discord</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #1e1e2f;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .search-box {
+            margin: 10px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .categories {
+            margin: 20px 0;
+        }
+        .category {
+            background-color: #1e1e2f;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .command-list {
+            margin-top: 10px;
+        }
+        .command-item {
+            padding: 8px;
+            background-color: #fff;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .command-item h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .command-item p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #1e1e2f;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Comandos do Bot Discord</h1>
+</header>
+
+<div class="container">
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Pesquisar comandos..." onkeyup="searchCommands()">
+    </div>
+
+    <div class="categories">
+        <div class="category" id="category-utility">
+            <h3>Comandos de Utilidade</h3>
+            <div class="command-list" id="utility-commands">
+                <!-- Comandos de exemplo -->
+                <div class="command-item" data-command="ping">
+                    <h4>!ping</h4>
+                    <p>Responde com 'Pong!' para testar a latência do bot.</p>
+                </div>
+                <div class="command-item" data-command="userinfo">
+                    <h4>!userinfo</h4>
+                    <p>Exibe informações sobre o usuário que executou o comando.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category" id="category-fun">
+            <h3>Comandos Divertidos</h3>
+            <div class="command-list" id="fun-commands">
+                <div class="command-item" data-command="joke">
+                    <h4>!joke</h4>
+                    <p>O bot conta uma piada aleatória.</p>
+                </div>
+                <div class="command-item" data-command="meme">
+                    <h4>!meme</h4>
+                    <p>Exibe um meme aleatório.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category" id="category-admin">
+            <h3>Comandos de Admin</h3>
+            <div class="command-list" id="admin-commands">
+                <div class="command-item" data-command="ban">
+                    <h4>!ban</h4>
+                    <p>Banir um usuário do servidor.</p>
+                </div>
+                <div class="command-item" data-command="kick">
+                    <h4>!kick</h4>
+                    <p>Expulsar um usuário do servidor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Bot Discord</p>
+</footer>
+
+<script>
+    // Função para pesquisar os comandos
+    function searchCommands() {
+        let input = document.getElementById('search').value.toLowerCase();
+        let categories = document.querySelectorAll('.category');
+
+        categories.forEach(category => {
+            let commands = category.querySelectorAll('.command-item');
+            let categoryName = category.querySelector('h3').innerText.toLowerCase();
+
+            commands.forEach(command => {
+                let commandName = command.querySelector('h4').innerText.toLowerCase();
+                let commandDescription = command.querySelector('p').innerText.toLowerCase();
+
+                // Mostrar ou esconder os comandos dependendo da pesquisa
+                if (commandName.includes(input) || commandDescription.includes(input) || categoryName.includes(input)) {
+                    command.style.display = 'block';
+                } else {
+                    command.style.display = 'none';
+                }
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
