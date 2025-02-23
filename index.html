@@ -115,9 +115,9 @@
     <!-- Menu Lateral -->
     <div class="sidebar">
         <h2>Categorias</h2>
-        <div class="category" onclick="toggleCommands('utility')">Comandos de Utilidade</div>
-        <div class="category" onclick="toggleCommands('fun')">Comandos Divertidos</div>
-        <div class="category" onclick="toggleCommands('admin')">Comandos de Admin</div>
+        <div class="category" onclick="toggleCommands('utility')" data-category="utility">Comandos de Utilidade</div>
+        <div class="category" onclick="toggleCommands('fun')" data-category="fun">Comandos Divertidos</div>
+        <div class="category" onclick="toggleCommands('admin')" data-category="admin">Comandos de Admin</div>
     </div>
 
     <!-- Área de Conteúdo -->
@@ -179,7 +179,8 @@
         document.getElementById(category + '-commands').style.display = 'block';
 
         // Marcar a categoria como ativa
-        document.querySelector('.category:nth-child(' + (Array.from(categories).indexOf(document.querySelector('.category:contains("' + category + '")')) + 1) + ')').classList.add('active');
+        const selectedCategory = document.querySelector('.category[data-category="'+category+'"]');
+        selectedCategory.classList.add('active');
     }
 
     // Função para pesquisar os comandos
