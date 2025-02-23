@@ -6,58 +6,96 @@
     <title>Comandos do Bot Discord</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f0f2f5;
+            display: flex;
+            height: 100vh;
         }
         header {
             background-color: #1e1e2f;
             color: white;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
         .container {
-            padding: 20px;
+            display: flex;
+            flex: 1;
+            overflow: hidden;
         }
-        .search-box {
-            margin: 10px 0;
+        /* Menu lateral */
+        .sidebar {
+            background-color: #ffffff;
+            width: 250px;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
         }
-        input[type="text"] {
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .categories {
-            margin: 20px 0;
+        .sidebar h2 {
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
         }
         .category {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
+        }
+        .category:hover {
+            background-color: #f0f2f5;
+        }
+        .category.active {
             background-color: #1e1e2f;
             color: white;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
         }
-        .command-list {
-            margin-top: 10px;
+        /* Area de conteúdo */
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 250px;
+            overflow-y: auto;
+            background-color: #ffffff;
         }
         .command-item {
-            padding: 8px;
-            background-color: #fff;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .command-item h4 {
-            margin: 0;
             font-size: 18px;
+            margin-bottom: 8px;
         }
         .command-item p {
-            margin: 5px 0;
             font-size: 14px;
             color: #555;
+        }
+        .search-box {
+            padding: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
         }
         footer {
             text-align: center;
@@ -74,51 +112,51 @@
 </header>
 
 <div class="container">
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Pesquisar comandos..." onkeyup="searchCommands()">
+    <!-- Menu Lateral -->
+    <div class="sidebar">
+        <h2>Categorias</h2>
+        <div class="category" onclick="toggleCommands('utility')">Comandos de Utilidade</div>
+        <div class="category" onclick="toggleCommands('fun')">Comandos Divertidos</div>
+        <div class="category" onclick="toggleCommands('admin')">Comandos de Admin</div>
     </div>
 
-    <div class="categories">
-        <div class="category" id="category-utility">
-            <h3>Comandos de Utilidade</h3>
-            <div class="command-list" id="utility-commands">
-                <!-- Comandos de exemplo -->
-                <div class="command-item" data-command="ping">
-                    <h4>!ping</h4>
-                    <p>Responde com 'Pong!' para testar a latência do bot.</p>
-                </div>
-                <div class="command-item" data-command="userinfo">
-                    <h4>!userinfo</h4>
-                    <p>Exibe informações sobre o usuário que executou o comando.</p>
-                </div>
+    <!-- Área de Conteúdo -->
+    <div class="content">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Pesquisar comandos..." onkeyup="searchCommands()">
+        </div>
+
+        <!-- Comandos -->
+        <div id="utility-commands" class="command-list" style="display:none;">
+            <div class="command-item" data-command="ping">
+                <h4>!ping</h4>
+                <p>Responde com 'Pong!' para testar a latência do bot.</p>
+            </div>
+            <div class="command-item" data-command="userinfo">
+                <h4>!userinfo</h4>
+                <p>Exibe informações sobre o usuário que executou o comando.</p>
             </div>
         </div>
 
-        <div class="category" id="category-fun">
-            <h3>Comandos Divertidos</h3>
-            <div class="command-list" id="fun-commands">
-                <div class="command-item" data-command="joke">
-                    <h4>!joke</h4>
-                    <p>O bot conta uma piada aleatória.</p>
-                </div>
-                <div class="command-item" data-command="meme">
-                    <h4>!meme</h4>
-                    <p>Exibe um meme aleatório.</p>
-                </div>
+        <div id="fun-commands" class="command-list" style="display:none;">
+            <div class="command-item" data-command="joke">
+                <h4>!joke</h4>
+                <p>O bot conta uma piada aleatória.</p>
+            </div>
+            <div class="command-item" data-command="meme">
+                <h4>!meme</h4>
+                <p>Exibe um meme aleatório.</p>
             </div>
         </div>
 
-        <div class="category" id="category-admin">
-            <h3>Comandos de Admin</h3>
-            <div class="command-list" id="admin-commands">
-                <div class="command-item" data-command="ban">
-                    <h4>!ban</h4>
-                    <p>Banir um usuário do servidor.</p>
-                </div>
-                <div class="command-item" data-command="kick">
-                    <h4>!kick</h4>
-                    <p>Expulsar um usuário do servidor.</p>
-                </div>
+        <div id="admin-commands" class="command-list" style="display:none;">
+            <div class="command-item" data-command="ban">
+                <h4>!ban</h4>
+                <p>Banir um usuário do servidor.</p>
+            </div>
+            <div class="command-item" data-command="kick">
+                <h4>!kick</h4>
+                <p>Expulsar um usuário do servidor.</p>
             </div>
         </div>
     </div>
@@ -129,26 +167,35 @@
 </footer>
 
 <script>
+    // Função para mostrar/ocultar comandos
+    function toggleCommands(category) {
+        // Resetar as categorias
+        const categories = document.querySelectorAll('.category');
+        categories.forEach(category => category.classList.remove('active'));
+
+        // Mostrar a categoria selecionada
+        const commands = document.querySelectorAll('.command-list');
+        commands.forEach(commandList => commandList.style.display = 'none');
+        document.getElementById(category + '-commands').style.display = 'block';
+
+        // Marcar a categoria como ativa
+        document.querySelector('.category:nth-child(' + (Array.from(categories).indexOf(document.querySelector('.category:contains("' + category + '")')) + 1) + ')').classList.add('active');
+    }
+
     // Função para pesquisar os comandos
     function searchCommands() {
         let input = document.getElementById('search').value.toLowerCase();
-        let categories = document.querySelectorAll('.category');
+        let commands = document.querySelectorAll('.command-item');
 
-        categories.forEach(category => {
-            let commands = category.querySelectorAll('.command-item');
-            let categoryName = category.querySelector('h3').innerText.toLowerCase();
+        commands.forEach(command => {
+            let commandName = command.querySelector('h4').innerText.toLowerCase();
+            let commandDescription = command.querySelector('p').innerText.toLowerCase();
 
-            commands.forEach(command => {
-                let commandName = command.querySelector('h4').innerText.toLowerCase();
-                let commandDescription = command.querySelector('p').innerText.toLowerCase();
-
-                // Mostrar ou esconder os comandos dependendo da pesquisa
-                if (commandName.includes(input) || commandDescription.includes(input) || categoryName.includes(input)) {
-                    command.style.display = 'block';
-                } else {
-                    command.style.display = 'none';
-                }
-            });
+            if (commandName.includes(input) || commandDescription.includes(input)) {
+                command.style.display = 'block';
+            } else {
+                command.style.display = 'none';
+            }
         });
     }
 </script>
